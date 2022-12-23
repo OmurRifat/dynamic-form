@@ -16,6 +16,12 @@ function App() {
           <option value="dog">Manufacturing</option>
         </select>
 
+        <div>
+          <input type="checkbox" className=' border border-purple-500' />
+          <label htmlFor="">Agree to terms</label>
+        </div>
+        <button className=' px-8 py-4 my-4 bg-purple-600'>Save</button>
+
       </div>
     </div>
   );
