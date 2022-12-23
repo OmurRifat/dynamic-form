@@ -4,20 +4,19 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h4>Dynamic Form</h4>
+      <div className=' w-1/3 border mx-auto'>
+        <h4>There will have some text.</h4>
+        <label htmlFor="name">Your Name</label>
+        <input className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
+
+        <label htmlFor="Sectors">Sectors</label>
+        <select name="pets" id="Sectors" className=' border my-4 ml-2 focus:outline-none focus:border-purple-500'>
+          <option value="">Please Select a Sectors</option>
+          <option value="dog">Manufacturing</option>
+        </select>
+
+      </div>
     </div>
   );
 }
