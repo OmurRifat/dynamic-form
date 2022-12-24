@@ -1,9 +1,16 @@
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './App.css';
 
 function App() {
 
   const { register, handleSubmit, formState: { errors } } = useForm();
+
+  axios.get('http://localhost:5000/sectors')
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(error => console.log(error.message));
 
   const onSubmit = (data) => {
     console.log(data);
