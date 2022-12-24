@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './App.css';
+import Services from './components/Services';
 
 function App() {
 
@@ -25,11 +26,13 @@ function App() {
           <label htmlFor="name">Your Name</label>
           <input required { ...register("name") } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
 
-          <label htmlFor="Sectors">Sectors</label>
+          {/* <label htmlFor="Sectors">Sectors</label>
           <select required name="pets" id="Sectors" className=' border my-4 ml-2 focus:outline-none focus:border-purple-500'>
             <option value="">Please Select a Sectors</option>
             <option { ...register("sector") } value="Manufacturing">Manufacturing</option>
-          </select>
+          </select> */}
+
+          <Services></Services>
 
           <div>
             <input { ...register("termsCondition") } type="checkbox" className=' border border-purple-500' />
