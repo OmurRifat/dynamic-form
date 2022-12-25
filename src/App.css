@@ -46,10 +46,10 @@ li:hover>ul {
   transform: translatex(101%) scale(1);
 }
 
-li>button svg {
+li>.nested-menu svg {
   transform: rotate(-90deg);
 }
 
-li:hover>button svg {
+li:hover>.nested-menu svg {
   transform: rotate(-270deg);
 }
