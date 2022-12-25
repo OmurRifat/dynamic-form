@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 function App() {
   const [sectors, setSectors] = useState([]);
   const [selected, setSelected] = useState("")
+  const [agree, setAgree] = useState(true);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -20,12 +21,16 @@ function App() {
   }, [])
 
   const onSubmit = (data) => {
-    console.log(data);
+    data.sector = selected
+    // axios.post('http://localhost:5000/store-info', data)
+    //   .then(res => console.log(res))
+    //   .catch(error => console.log(error.message));
   }
 
   const onSectorClick = (e) => {
     setSelected(e);
   }
+
   return (
     <div className=" w-5/6 md:w-3/4 mx-auto">
       <h4>Dynamic Form</h4>
@@ -101,7 +106,7 @@ function App() {
                               aria-controls="menu-lang-python"
                               className=" nested-menu w-full text-left flex items-center outline-none focus:outline-none"
                             >
-                              <span { ...register("sector") } onClick={ () => onSectorClick(`${subParentSector?.SubParentSector}`) } className="pr-1 flex-1">{ subParentSector?.SubParentSector }</span>
+                              <span onClick={ () => onSectorClick(`${subParentSector?.SubParentSector}`) } className="pr-1 flex-1">{ subParentSector?.SubParentSector }</span>
                               {
                                 subParentSector?.SuperChildrenSector && <span className="mr-auto">
                                   <svg
@@ -125,7 +130,7 @@ function App() {
                               >
                                 {
                                   subParentSector?.SuperChildrenSector?.map((children, id) => (
-                                    <li key={ id } { ...register("sector") } onClick={ () => onSectorClick(`${children?.SubChildrenSector}`) } className="px-3 py-1 hover:bg-gray-100">{ children.SubChildrenSector }</li>
+                                    <li key={ id } onClick={ () => onSectorClick(`${children?.SubChildrenSector}`) } className="px-3 py-1 hover:bg-gray-100">{ children.SubChildrenSector }</li>
                                   ))
                                 }
                               </ul>
@@ -142,10 +147,10 @@ function App() {
           </div>
 
           <div>
-            <input { ...register("termsCondition") } type="checkbox" className=' border border-purple-500' />
-            <label htmlFor="">Agree to terms</label>
+            <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onChange={ () => setAgree(!agree) } className=' border border-purple-500' />
+            <label htmlFor="agree-condition">Agree to terms</label>
           </div>
-          <button type='submit' className=' px-8 py-4 my-4 bg-purple-600'>Save</button>
+          <button disabled={ agree } id='submit-btn' type='submit' className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'>Save</button>
 
         </div >
       </form >
