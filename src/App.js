@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './App.css';
+import './components/Style.css'
 import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
@@ -77,21 +78,35 @@ function App() {
                       }
                       value={ sector }
                     >
-                      { ({ selected }) => (
-                        <>
-                          <span
-                            className={ `block truncate ${selected ? 'font-medium' : 'font-normal'
-                              }` }
-                          >
-                            { sector?.MainSector }
+                      <button
+                        aria-haspopup="true"
+                        aria-controls="parent-sector"
+                      >
+                        <span
+                          className='block truncate font-medium'
+                        >
+                          { sector?.MainSector }
+                        </span>
+                        { sector?.ParentSector ? (
+                          <span className="absolute inset-y-0 right-1 flex items-center pl-3 text-amber-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={ 1.5 } stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+
                           </span>
-                          {/* { selected ? (
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
-                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                            </span>
-                          ) : null } */}
-                        </>
-                      ) }
+                        ) : null }
+                      </button>
+                      <ul
+                        id='parent-sector'
+                        aria-hidden='true'
+                        className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute 
+  transition duration-150 ease-in-out origin-top min-w-32"
+                      >
+                        { sector?.ParentSector.map((subParentSector, id) => {
+
+                        }) }
+                      </ul>
+
                     </Listbox.Option>
                   )) }
                 </Listbox.Options>
