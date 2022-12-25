@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 function App() {
   const [sectors, setSectors] = useState([]);
-  const [selected, setSelected] = useState({})
+  const [selected, setSelected] = useState("")
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -14,13 +14,17 @@ function App() {
     axios.get('http://localhost:5000/sectors')
       .then(res => {
         setSectors(res.data)
-        setSelected(res.data[0]);
+        setSelected(res.data[0].MainSector);
       })
       .catch(error => console.log(error.message));
   }, [])
 
   const onSubmit = (data) => {
     console.log(data);
+  }
+
+  const onSectorClick = (e) => {
+    setSelected(e);
   }
   return (
     <div className=" w-5/6 md:w-3/4 mx-auto">
@@ -39,7 +43,7 @@ function App() {
               className="container-div outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32"
             >
               <span
-                className="pr-1 font-semibold flex-1">{ selected?.MainSector }</span>
+                className="pr-1 font-semibold flex-1">{ selected }</span>
               <span>
                 <svg
                   className="fill-current h-4 w-4 transform group-hover:-rotate-180 transition duration-150 ease-in-out"
@@ -97,7 +101,7 @@ function App() {
                               aria-controls="menu-lang-python"
                               className=" nested-menu w-full text-left flex items-center outline-none focus:outline-none"
                             >
-                              <span className="pr-1 flex-1">{ subParentSector?.SubParentSector }</span>
+                              <span { ...register("sector") } onClick={ () => onSectorClick(`${subParentSector?.SubParentSector}`) } className="pr-1 flex-1">{ subParentSector?.SubParentSector }</span>
                               {
                                 subParentSector?.SuperChildrenSector && <span className="mr-auto">
                                   <svg
@@ -121,7 +125,7 @@ function App() {
                               >
                                 {
                                   subParentSector?.SuperChildrenSector?.map((children, id) => (
-                                    <li key={ id } className="px-3 py-1 hover:bg-gray-100">{ children.SubChildrenSector }</li>
+                                    <li key={ id } { ...register("sector") } onClick={ () => onSectorClick(`${children?.SubChildrenSector}`) } className="px-3 py-1 hover:bg-gray-100">{ children.SubChildrenSector }</li>
                                   ))
                                 }
                               </ul>
