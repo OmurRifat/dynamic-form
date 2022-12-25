@@ -1,33 +1,40 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './App.css';
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 function App() {
+  const [sectors, setSectors] = useState([]);
+  const [selected, setSelected] = useState({})
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
-  axios.get('http://localhost:5000/sectors')
-    .then(res => {
-      console.log(res.data)
-    })
-    .catch(error => console.log(error.message));
+  useEffect(() => {
+    axios.get('http://localhost:5000/sectors')
+      .then(res => {
+        console.log(res.data)
+        setSectors(res.data)
+        setSelected(res.data[0]);
+      })
+      .catch(error => console.log(error.message));
+  }, [])
 
   const onSubmit = (data) => {
     console.log(data);
   }
 
-  const people = [
-    { name: 'Wade Cooper' },
-    { name: 'Arlene Mccoy' },
-    { name: 'Devon Webb' },
-    { name: 'Tom Cook' },
-    { name: 'Tanya Fox' },
-    { name: 'Hellen Schmidt' },
-  ]
-  const [selected, setSelected] = useState(people[0])
+  // const people = [
+  //   { name: 'Wade Cooper' },
+  //   { name: 'Arlene Mccoy' },
+  //   { name: 'Devon Webb' },
+  //   { name: 'Tom Cook' },
+  //   { name: 'Tanya Fox' },
+  //   { name: 'Hellen Schmidt' },
+  // ]
+
+  // console.log(sectors);
   return (
     <div className="App">
       <h4>Dynamic Form</h4>
@@ -45,8 +52,8 @@ function App() {
 
           <Listbox value={ selected } onChange={ setSelected }>
             <div className="relative mt-1">
-              <Listbox.Button className="relative w-4/5 cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md shadow-orange-600 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                <span className="block truncate">{ selected.name }</span>
+              <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md shadow-orange-600 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+                <span className="block truncate">{ selected?.MainSector }</span>
                 <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                   <ChevronUpDownIcon
                     className="h-5 w-5 text-gray-400"
@@ -60,15 +67,15 @@ function App() {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Listbox.Options className="absolute mt-1 max-h-60 w-4/5 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  { people.map((person, personIdx) => (
+                <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  { sectors?.map((sector, personIdx) => (
                     <Listbox.Option
                       key={ personIdx }
                       className={ ({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                         }`
                       }
-                      value={ person }
+                      value={ sector }
                     >
                       { ({ selected }) => (
                         <>
@@ -76,13 +83,13 @@ function App() {
                             className={ `block truncate ${selected ? 'font-medium' : 'font-normal'
                               }` }
                           >
-                            { person.name }
+                            { sector?.MainSector }
                           </span>
-                          { selected ? (
+                          {/* { selected ? (
                             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
                               <CheckIcon className="h-5 w-5" aria-hidden="true" />
                             </span>
-                          ) : null }
+                          ) : null } */}
                         </>
                       ) }
                     </Listbox.Option>
