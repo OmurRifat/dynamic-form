@@ -3,11 +3,16 @@ import { useForm } from 'react-hook-form';
 import './App.css';
 import './components/Style.css'
 import { useEffect, useState } from 'react'
+import Modal from './components/Modal';
 
 function App() {
   const [sectors, setSectors] = useState([]);
   const [selected, setSelected] = useState("")
   const [agree, setAgree] = useState(true);
+
+  let storedData = {};
+
+
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -22,6 +27,7 @@ function App() {
 
   const onSubmit = (data) => {
     data.sector = selected
+    storedData = data;
     // axios.post('http://localhost:5000/store-info', data)
     //   .then(res => console.log(res))
     //   .catch(error => console.log(error.message));
@@ -30,7 +36,6 @@ function App() {
   const onSectorClick = (e) => {
     setSelected(e);
   }
-
   return (
     <div className=" w-5/6 md:w-3/4 mx-auto">
       <h4>Dynamic Form</h4>
@@ -151,7 +156,6 @@ function App() {
             <label htmlFor="agree-condition">Agree to terms</label>
           </div>
           <button disabled={ agree } id='submit-btn' type='submit' className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'>Save</button>
-
         </div >
       </form >
     </div >
