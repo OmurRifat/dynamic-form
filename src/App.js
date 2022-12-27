@@ -9,8 +9,17 @@ function App() {
   const [sectors, setSectors] = useState([]);
   const [selected, setSelected] = useState("")
   const [agree, setAgree] = useState(true);
-
+  let [isOpen, setIsOpen] = useState(false)
   let storedData = {};
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
+
 
 
 
@@ -26,8 +35,10 @@ function App() {
   }, [])
 
   const onSubmit = (data) => {
+    console.log(data)
     data.sector = selected
     storedData = data;
+    console.log("full Data", storedData)
     // axios.post('http://localhost:5000/store-info', data)
     //   .then(res => console.log(res))
     //   .catch(error => console.log(error.message));
@@ -43,7 +54,9 @@ function App() {
         <div >
           <h4>There will have some text.</h4>
           <label htmlFor="name">Your Name</label>
-          <input required { ...register("name") } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
+          <input { ...register("name", {
+            required: true
+          }) } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
 
           <label htmlFor="Sectors">Sectors:</label>
           <div className="group inline-block">
@@ -155,7 +168,19 @@ function App() {
             <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onChange={ () => setAgree(!agree) } className=' border border-purple-500' />
             <label htmlFor="agree-condition">Agree to terms</label>
           </div>
-          <button disabled={ agree } id='submit-btn' type='submit' className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'>Save</button>
+          <button
+            disabled={ agree }
+            id='submit-btn'
+            type='submit'
+            onClick={ openModal }
+            className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'
+          >
+            Save
+          </button>
+          <Modal
+            isOpen={ isOpen }
+            closeModal={ closeModal }
+          ></Modal>
         </div >
       </form >
     </div >
