@@ -41,6 +41,7 @@ function App() {
 
   function closeModal() {
     setIsOpen(false)
+    document.getElementById('form-container').reset()
   }
 
   function openModal() {
@@ -55,7 +56,7 @@ function App() {
   return (
     <div className=" w-5/6 md:w-3/4 mx-auto">
       <h4>Dynamic Form</h4>
-      <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full md:w-1/2 border mx-auto relative'>
+      <form id='form-container' onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full md:w-1/2 border mx-auto relative'>
         <div >
           <h4>There will have some text.</h4>
           <label htmlFor="name">Your Name</label>

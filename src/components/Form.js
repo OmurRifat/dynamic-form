@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
 
 const Form = ({ storedData, closeModal }) => {
     const [updatedData, setUpdatedData] = useState(null);
     const [sectors, setSectors] = useState([]);
     const [selected, setSelected] = useState("")
-    const [name, setName] = useState(null);
+    const [name, setName] = useState("");
 
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -24,9 +25,11 @@ const Form = ({ storedData, closeModal }) => {
         data.sector = selected
         data.termsCondition = storedData.termsCondition;
         setUpdatedData(data);
-        // axios.post('http://localhost:5000/store-info', data)
-        //   .then(res => console.log(res))
-        //   .catch(error => console.log(error.message));
+        axios.post('http://localhost:5000/store-info', data)
+            .then(res => {
+                res.status == 200 ? toast.success("Sector Booked") : toast.error("Error Occured, Please Resubmit.")
+            })
+            .catch(error => console.log(error.message));
     }
 
     const onSectorClick = (e) => {
@@ -35,7 +38,6 @@ const Form = ({ storedData, closeModal }) => {
     const handleValidInput = (e) => {
         setName(e.target.value);
     }
-
     return (
         <div>
             <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full border mx-auto relative'>
