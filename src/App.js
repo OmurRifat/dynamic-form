@@ -9,16 +9,11 @@ function App() {
   const [sectors, setSectors] = useState([]);
   const [selected, setSelected] = useState("")
   const [agree, setAgree] = useState(true);
-  let [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [name, setName] = useState(null)
+
   let storedData = {};
 
-  function closeModal() {
-    setIsOpen(false)
-  }
-
-  function openModal() {
-    setIsOpen(true)
-  }
 
 
 
@@ -47,6 +42,20 @@ function App() {
   const onSectorClick = (e) => {
     setSelected(e);
   }
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    name && setIsOpen(true)
+  }
+
+  const handleValidInput = (e) => {
+    setName(e.target.value);
+  }
+  // console.log(name)
+
   return (
     <div className=" w-5/6 md:w-3/4 mx-auto">
       <h4>Dynamic Form</h4>
@@ -54,9 +63,7 @@ function App() {
         <div >
           <h4>There will have some text.</h4>
           <label htmlFor="name">Your Name</label>
-          <input { ...register("name", {
-            required: true
-          }) } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
+          <input required { ...register("name") } onChange={ handleValidInput } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
 
           <label htmlFor="Sectors">Sectors:</label>
           <div className="group inline-block">
@@ -173,15 +180,16 @@ function App() {
             id='submit-btn'
             type='submit'
             onClick={ openModal }
+
             className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'
           >
             Save
           </button>
-          <Modal
-            isOpen={ isOpen }
-            closeModal={ closeModal }
-          ></Modal>
         </div >
+        { name && <Modal
+          isOpen={ isOpen }
+          closeModal={ closeModal }
+        ></Modal> }
       </form >
     </div >
   );
