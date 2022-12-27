@@ -183,7 +183,7 @@ function App() {
 
             className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'
           >
-            Save
+            NEXT
           </button>
         </div >
         { name && <Modal
