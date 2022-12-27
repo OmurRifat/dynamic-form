@@ -64,7 +64,7 @@ const Form = () => {
                     <ul
                         id="menu"
                         aria-hidden="true"
-                        className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top min-w-32"
+                        className="bg-white border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top min-w-32 overflow-visible"
                     >
                         {
                             sectors?.map((sector, id) => (
@@ -95,12 +95,12 @@ const Form = () => {
                                     <ul
                                         id="menu-lang"
                                         aria-hidden="true"
-                                        className="bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left min-w-32 hover:overflow-y-auto hover:overflow-x-visible"
+                                        className="bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left min-w-32 overflow-visible cursor-pointer"
                                     >
 
                                         {
                                             sector?.ParentSector?.map((subParentSector, id) => (
-                                                <li key={ id } className="rounded-sm relative px-3 py-1 hover:bg-gray-100">
+                                                <li key={ id } className=" cursor-pointer rounded-sm relative px-3 py-1 hover:bg-gray-100">
                                                     <div
                                                         aria-haspopup="true"
                                                         aria-controls="menu-lang-python"
@@ -126,7 +126,7 @@ const Form = () => {
                                                         subParentSector?.SuperChildrenSector && <ul
                                                             id="menu-lang-python"
                                                             aria-hidden="true"
-                                                            className="bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left min-w-32 hover:overflow-y-auto hover:overflow-x-visible"
+                                                            className=" cursor-pointer bg-white border rounded-sm absolute top-0 right-0 transition duration-150 ease-in-out origin-top-left min-w-32 overflow-visible"
                                                         >
                                                             {
                                                                 subParentSector?.SuperChildrenSector?.map((children, id) => (
