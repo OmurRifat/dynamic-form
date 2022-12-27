@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const Form = () => {
+const Form = ({ storedData, closeModal }) => {
+    const [updatedData, setUpdatedData] = useState(null);
     const [sectors, setSectors] = useState([]);
     const [selected, setSelected] = useState("")
+    const [name, setName] = useState(null);
 
-    let storedData = {};
 
     const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -14,16 +15,15 @@ const Form = () => {
         axios.get('http://localhost:5000/sectors')
             .then(res => {
                 setSectors(res.data)
-                setSelected(res.data[0].MainSector);//kela hobe
+                setSelected(storedData?.sector);//kela hobe
             })
             .catch(error => console.log(error.message));
-    }, [])
+    }, [storedData?.sector])
 
     const onSubmit = (data) => {
-        console.log(data)
         data.sector = selected
-        storedData = data;
-        console.log("full Data", storedData)
+        data.termsCondition = storedData.termsCondition;
+        setUpdatedData(data);
         // axios.post('http://localhost:5000/store-info', data)
         //   .then(res => console.log(res))
         //   .catch(error => console.log(error.message));
@@ -32,13 +32,16 @@ const Form = () => {
     const onSectorClick = (e) => {
         setSelected(e);
     }
+    const handleValidInput = (e) => {
+        setName(e.target.value);
+    }
 
     return (
         <div>
-            <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full md:w-4/5 border mx-auto relative'>
+            <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full border mx-auto relative'>
                 <h4>There will have some text.</h4>
                 <label htmlFor="name">Your Name</label>
-                <input required { ...register("name") } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
+                <input defaultValue={ storedData.name } onChange={ handleValidInput } required { ...register("name") } className=' border my-4 ml-2 focus:outline-none focus:border-purple-500' type="text" name="name" id="name" /> <br />
 
                 <label htmlFor="Sectors">Sectors:</label>
                 <div className="group inline-block">
@@ -146,13 +149,16 @@ const Form = () => {
                     </ul>
                 </div>
                 <br />
-                <button
-                    id='submit-btn'
-                    type='submit'
-                    className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 '
-                >
-                    SAVE
-                </button>
+                <div className='mt-4'>
+                    <button
+                        id='submit-btn'
+                        type='submit'
+                        onClick={ closeModal }
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    >
+                        SAVE
+                    </button>
+                </div>
             </form >
         </div>
     );

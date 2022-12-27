@@ -8,11 +8,10 @@ import Modal from './components/Modal';
 function App() {
   const [sectors, setSectors] = useState([]);
   const [selected, setSelected] = useState("")
+  const [storedData, setStoredData] = useState(null)
   const [agree, setAgree] = useState(true);
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState(null)
-
-  let storedData = {};
 
 
 
@@ -30,15 +29,12 @@ function App() {
   }, [])
 
   const onSubmit = (data) => {
-    console.log(data)
-    data.sector = selected
-    storedData = data;
-    console.log("full Data", storedData)
+    data.sector = selected;
+    setStoredData(data);
     // axios.post('http://localhost:5000/store-info', data)
     //   .then(res => console.log(res))
     //   .catch(error => console.log(error.message));
   }
-
   const onSectorClick = (e) => {
     setSelected(e);
   }
@@ -189,6 +185,7 @@ function App() {
         { name && <Modal
           isOpen={ isOpen }
           closeModal={ closeModal }
+          storedData={ storedData }
         ></Modal> }
       </form >
     </div >
