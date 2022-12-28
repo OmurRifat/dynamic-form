@@ -3,7 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import Form from './Form';
 
-const Modal = ({ closeModal, isOpen, storedData }) => {
+const Modal = ({ closeModal, isOpen, storedData, setName }) => {
 
     return (
         <div>
@@ -44,6 +44,7 @@ const Modal = ({ closeModal, isOpen, storedData }) => {
                                         <Form
                                             storedData={ storedData }
                                             closeModal={ closeModal }
+                                            setName={ setName }
                                         ></Form>
                                     </div>
                                 </Dialog.Panel>

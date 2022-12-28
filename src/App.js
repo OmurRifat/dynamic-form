@@ -42,8 +42,7 @@ function App() {
     setIsOpen(false)
     document.getElementById('form-container').reset()
     setSelected("Please Select Any Sector");
-    setAgree(false);
-    setName(null);
+    setAgree(true);
   }
 
   function openModal() {
@@ -192,7 +191,7 @@ function App() {
               </div>
 
               <div className='flex items-center mb-6'>
-                <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onChange={ () => setAgree(!agree) } className='w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mr-2' />
+                <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onClick={ () => setAgree(!agree) } className='w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mr-2' />
                 <label className='block text-gray-500 font-bold mb-1 md:mb-0 pr-4' htmlFor="agree-condition">Agree to terms</label>
               </div>
               <button
@@ -209,6 +208,7 @@ function App() {
               isOpen={ isOpen }
               closeModal={ closeModal }
               storedData={ storedData }
+              setName={ setName }
             ></Modal> }
           </form >
         </div>

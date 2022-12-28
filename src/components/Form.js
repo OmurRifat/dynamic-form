@@ -1,13 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 
-const Form = ({ storedData, closeModal }) => {
+const Form = ({ storedData, closeModal, setName }) => {
     const [updatedData, setUpdatedData] = useState(null);
     const [sectors, setSectors] = useState([]);
     const [selected, setSelected] = useState("")
-    const [name, setName] = useState("");
+    const [updatedName, setUpdatedName] = useState("");
 
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -24,10 +24,10 @@ const Form = ({ storedData, closeModal }) => {
     const onSubmit = (data) => {
         data.sector = selected
         data.termsCondition = storedData.termsCondition;
-        setUpdatedData(data);
         axios.post('https://dynamic-form-server.vercel.app/store-info', data)
             .then(res => {
-                res.status == 200 ? toast.success("Sector Booked") : toast.error("Error Occured, Please Resubmit.")
+                res.status === 200 ? toast.success("Sector Booked") : toast.error("Error Occured, Please Resubmit.")
+                setName(false)
             })
             .catch(error => console.log(error.message));
     }
@@ -36,11 +36,11 @@ const Form = ({ storedData, closeModal }) => {
         setSelected(e);
     }
     const handleValidInput = (e) => {
-        setName(e.target.value);
+        setUpdatedName(e.target.value);
     }
     return (
         <div>
-            <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full mx-auto relative'>
+            <form onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full mx-auto relative mt-4 md:mt-8'>
                 <div className='md:flex md:items-center mb-6'>
                     <label htmlFor="name" className='block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4'>Your Name</label>
                     <input defaultValue={ storedData.name } onChange={ handleValidInput } required { ...register("name") } className='bg-gray-200 appearance-none border-2 border-gray-200 rounded  py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500' type="text" name="name" id="name" /> <br />
@@ -155,7 +155,7 @@ const Form = ({ storedData, closeModal }) => {
                     </div>
                 </div>
                 <br />
-                <div className='mt-4'>
+                <div className=''>
                     <button
                         id='submit-btn'
                         type='submit'
