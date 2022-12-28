@@ -9,7 +9,7 @@ import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 function App() {
   const [sectors, setSectors] = useState([]);
-  const [selected, setSelected] = useState("")
+  const [selected, setSelected] = useState("Please Select Any Sector")
   const [storedData, setStoredData] = useState(null)
   const [agree, setAgree] = useState(true);
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +26,6 @@ function App() {
     axios.get('https://dynamic-form-server.vercel.app/sectors')
       .then(res => {
         setSectors(res.data)
-        setSelected(res.data[0].MainSector);
       })
       .catch(error => console.log(error.message));
   }, [])
@@ -42,7 +41,9 @@ function App() {
   function closeModal() {
     setIsOpen(false)
     document.getElementById('form-container').reset()
-    setSelected("")
+    setSelected("Please Select Any Sector");
+    setAgree(false);
+    setName(null);
   }
 
   function openModal() {
@@ -83,12 +84,12 @@ function App() {
               </div>
 
               <div className='md:flex md:items-center mb-6'>
-                <label htmlFor="Sectors" className='block text-gray-500 font-bold mb-1 md:mb-0 pr-4'>Sectors:</label>
+                <label htmlFor="Sectors" className='block text-gray-500 font-bold mb-1 md:mb-0 pr-4'>Sectors</label>
                 <div className="group inline-block">
                   <div
                     aria-haspopup="true"
                     aria-controls="menu"
-                    className="container-div outline-none focus:outline-none border px-3 py-1 bg-white rounded-sm flex items-center min-w-32"
+                    className="container-div outline-none focus:outline-none border px-3 py-1 bg-gray-200 rounded-lg flex items-center min-w-32"
                   >
                     <span
                       className="pr-1 font-semibold flex-1">{ selected }</span>
@@ -191,7 +192,7 @@ function App() {
               </div>
 
               <div className='flex items-center mb-6'>
-                <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onChange={ () => setAgree(!agree) } className=' border border-purple-500 mr-2' />
+                <input id='agree-condition' { ...register("termsCondition") } type="checkbox" onChange={ () => setAgree(!agree) } className='w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mr-2' />
                 <label className='block text-gray-500 font-bold mb-1 md:mb-0 pr-4' htmlFor="agree-condition">Agree to terms</label>
               </div>
               <button
@@ -199,8 +200,7 @@ function App() {
                 id='submit-btn'
                 type='submit'
                 onClick={ openModal }
-
-                className=' px-8 py-4 my-4 bg-purple-600 disabled:bg-purple-400 disabled:cursor-not-allowed'
+                className={ !agree ? 'text-white font-bold bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2' : 'text-white font-bold disabled:cursor-not-allowed disabled:bg-gray-400 px-5 py-2.5 text-center mr-2 mb-2 rounded-lg' }
               >
                 NEXT
               </button>
