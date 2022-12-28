@@ -52,9 +52,9 @@ function App() {
       <div className='relative'>
         <div className=' absolute -top-4 -left-8 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob '></div>
         <div className=' absolute -top-4 -right-8 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-2000'></div>
-        <div className=' absolute -bottom-8 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-4000'></div>
-        <div className='relative bg-white px-6 md:px-16 py-4 rounded-2xl'>
-          <h4 className='text-2xl font-bold text-amber-600 text-center'>Dynamic Form</h4>
+        <div className=' absolute -bottom-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-4000'></div>
+        <div className='relative shadow-2xl bg-white px-6 md:px-16 py-4 rounded-2xl'>
+          <h4 className='text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-500  via-purple-500  to-pink-500'>Dynamic Form</h4>
           <form id='form-container' onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full border relative'>
             <div >
               <h4>There will have some text.</h4>
