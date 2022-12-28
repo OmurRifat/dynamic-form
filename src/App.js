@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import './App.css';
-import './components/Style.css'
 import { useEffect, useState } from 'react'
 import Modal from './components/Modal';
 import useDarkSide from './Hooks/useDarkSide';
