@@ -4,6 +4,8 @@ import './App.css';
 import './components/Style.css'
 import { useEffect, useState } from 'react'
 import Modal from './components/Modal';
+import useDarkSide from './Hooks/useDarkSide';
+import { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 function App() {
   const [sectors, setSectors] = useState([]);
@@ -12,6 +14,10 @@ function App() {
   const [agree, setAgree] = useState(true);
   const [isOpen, setIsOpen] = useState(false)
   const [name, setName] = useState(null)
+  const [colorTheme, setTheme] = useDarkSide();
+  const [darkSide, setDarkSide] = useState(
+    colorTheme === "light" ? true : false
+  )
 
 
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -47,12 +53,26 @@ function App() {
     setName(e.target.value);
   }
 
+
+  //Theme Changer
+  const toggleDarkMode = (checked) => {
+    setTheme(colorTheme);
+    setDarkSide(checked);
+  }
+
   return (
-    <div className="bg-gray-100  w-full min-h-screen flex items-center justify-center flex-col">
+    <div className=" relative bg-gray-100 dark:bg-slate-700 w-full min-h-screen flex items-center justify-center flex-col">
+      <DarkModeSwitch
+        className=' absolute top-6 right-6'
+        style={ { marginBottom: "2rem" } }
+        checked={ darkSide }
+        onChange={ toggleDarkMode }
+        size={ 40 }
+      />
       <div className='relative'>
-        <div className=' absolute -top-4 -left-8 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob '></div>
-        <div className=' absolute -top-4 -right-8 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-2000'></div>
-        <div className=' absolute -bottom-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-4000'></div>
+        <div className=' absolute -top-4 -left-8 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob '></div>
+        <div className=' absolute -top-4 -right-8 w-72 h-72 bg-yellow-300 dark:bg-yellow-600 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-2000'></div>
+        <div className=' absolute -bottom-10 w-72 h-72 bg-pink-300 dark:bg-purple-600 rounded-full mix-blend-multiply blur-xl opacity-70 animate-blob animation-delay-4000'></div>
         <div className='relative shadow-2xl bg-white px-6 md:px-16 py-4 rounded-2xl'>
           <h4 className='text-3xl font-extrabold text-center text-transparent bg-clip-text bg-gradient-to-r from-indigo-500  via-purple-500  to-pink-500'>Dynamic Form</h4>
           <form id='form-container' onSubmit={ handleSubmit(onSubmit) } action="" className=' w-full border relative'>
