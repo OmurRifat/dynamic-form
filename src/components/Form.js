@@ -13,7 +13,7 @@ const Form = ({ storedData, closeModal }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/sectors')
+        axios.get('https://dynamic-form-server.vercel.app/sectors')
             .then(res => {
                 setSectors(res.data)
                 setSelected(storedData?.sector);//kela hobe
@@ -25,7 +25,7 @@ const Form = ({ storedData, closeModal }) => {
         data.sector = selected
         data.termsCondition = storedData.termsCondition;
         setUpdatedData(data);
-        axios.post('http://localhost:5000/store-info', data)
+        axios.post('https://dynamic-form-server.vercel.app/store-info', data)
             .then(res => {
                 res.status == 200 ? toast.success("Sector Booked") : toast.error("Error Occured, Please Resubmit.")
             })
